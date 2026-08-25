@@ -46,12 +46,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.List;
 
 public abstract class AbstractNMSAdapter implements NMSAdapter {
 
     private static final ReflectField<ItemStack> ITEM_STACK_HANDLE = new ReflectField<>(
             CraftItemStack.class, ItemStack.class, "handle");
+
+    private static final EnumMap<Material, DestroySpeedCategory> DESTROY_SPEED_CATEGORIES = new EnumMap<>(Material.class);
+
+    private static final ItemStack DIAMOND_AXE_ITEM_STACK = new ItemStack(Items.DIAMOND_AXE);
+    private static final ItemStack DIAMOND_SHOVEL_ITEM_STACK = new ItemStack(Items.DIAMOND_SHOVEL);
 
     @Override
     public void loadLegacy() {
@@ -140,15 +146,19 @@ public abstract class AbstractNMSAdapter implements NMSAdapter {
 
     @Override
     public DestroySpeedCategory getDestroySpeedCategory(Material material) {
-        BlockState blockState = ((CraftBlockData) material.createBlockData()).getState();
+        return DESTROY_SPEED_CATEGORIES.computeIfAbsent(material, mat -> {
+            BlockState blockState = ((CraftBlockData) mat.createBlockData()).getState();
 
-        if (Items.DIAMOND_AXE.getDestroySpeed(new ItemStack(Items.DIAMOND_AXE), blockState) == 8f)
-            return DestroySpeedCategory.AXE;
+            if (Items.DIAMOND_AXE.getDestroySpeed(DIAMOND_AXE_ITEM_STACK, blockState) == 8f) {
+                return DestroySpeedCategory.AXE;
+            }
 
-        if (Items.DIAMOND_SHOVEL.getDestroySpeed(new ItemStack(Items.DIAMOND_SHOVEL), blockState) == 8f)
-            return DestroySpeedCategory.SHOVEL;
+            if (Items.DIAMOND_SHOVEL.getDestroySpeed(DIAMOND_SHOVEL_ITEM_STACK, blockState) == 8f) {
+                return DestroySpeedCategory.SHOVEL;
+            }
 
-        return DestroySpeedCategory.PICKAXE;
+            return DestroySpeedCategory.PICKAXE;
+        });
     }
 
     @Override

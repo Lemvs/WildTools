@@ -236,6 +236,9 @@ public class BlocksListener implements Listener {
             case AXE:
                 replaceTypeName = "AXE";
                 break;
+            case HOE:
+                replaceTypeName = "HOE";
+                break;
             case SHOVEL:
                 replaceTypeName = ServerVersion.isLegacy() ? "SPADE" : "SHOVEL";
                 break;

@@ -58,6 +58,7 @@ public class NMSAdapterImpl implements NMSAdapter {
 
     private static final Enchantment GLOW_ENCHANT = initializeGlowEnchantment();
     private static final ItemStack DIAMOND_AXE_ITEM_STACK = new ItemStack(Items.DIAMOND_AXE);
+    private static final ItemStack DIAMOND_HOE_ITEM_STACK = new ItemStack(Items.DIAMOND_HOE);
     private static final ItemStack DIAMOND_SHOVEL_ITEM_STACK = new ItemStack(Items.DIAMOND_SHOVEL);
 
     @Override
@@ -141,6 +142,10 @@ public class NMSAdapterImpl implements NMSAdapter {
 
             if (Items.DIAMOND_AXE.getDestroySpeed(DIAMOND_AXE_ITEM_STACK, blockData) == 8f) {
                 return DestroySpeedCategory.AXE;
+            }
+
+            if (Items.DIAMOND_HOE.getDestroySpeed(DIAMOND_HOE_ITEM_STACK, blockData) == 8f) {
+                return DestroySpeedCategory.HOE;
             }
 
             if (Items.DIAMOND_SHOVEL.getDestroySpeed(DIAMOND_SHOVEL_ITEM_STACK, blockData) == 8f) {

@@ -17,9 +17,9 @@ public class CraftingListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPrepareItemCraft(PrepareItemCraftEvent e) {
-        if (e.getInventory().getMatrix() == null) {
+        if (e.getInventory().getMatrix() == null || e.getInventory().getResult() == null) {
             return;
         }
 

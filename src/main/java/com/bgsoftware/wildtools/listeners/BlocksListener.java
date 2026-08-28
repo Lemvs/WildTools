@@ -228,16 +228,12 @@ public class BlocksListener implements Listener {
         ToolItemStack toolItemStack = ToolItemStack.of(handItem);
         Tool tool = toolItemStack.getTool();
 
-        if (tool == null) {
+        if (tool == null || !tool.isOmni()) {
             return;
         }
 
         if (!isWhitelistedWorld(tool, e.getClickedBlock().getWorld())) {
             e.setCancelled(true);
-            return;
-        }
-
-        if (!tool.isOmni()) {
             return;
         }
 

@@ -22,6 +22,7 @@ import com.bgsoftware.wildtools.listeners.EditorListener;
 import com.bgsoftware.wildtools.listeners.PlayerListener;
 import com.bgsoftware.wildtools.nms.NMSAdapter;
 import com.bgsoftware.wildtools.nms.NMSWorld;
+import com.bgsoftware.wildtools.utils.items.OmniToolHelper;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -69,6 +70,8 @@ public class WildToolsPlugin extends JavaPlugin implements WildTools {
         new Metrics(this, 4107);
 
         log("******** ENABLE START ********");
+
+        OmniToolHelper.init();
 
         try {
             Class.forName("org.bukkit.event.inventory.PrepareAnvilEvent");

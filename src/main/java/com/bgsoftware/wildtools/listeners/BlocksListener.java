@@ -4,7 +4,8 @@ import com.bgsoftware.wildtools.Locale;
 import com.bgsoftware.wildtools.WildToolsPlugin;
 import com.bgsoftware.wildtools.api.objects.tools.Tool;
 import com.bgsoftware.wildtools.tools.ToolBreaksTracker;
-import com.bgsoftware.wildtools.utils.ServerVersion;
+import com.bgsoftware.wildtools.utils.items.DestroySpeedCategory;
+import com.bgsoftware.wildtools.utils.items.OmniToolHelper;
 import com.bgsoftware.wildtools.utils.items.ToolItemStack;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -230,22 +231,8 @@ public class BlocksListener implements Listener {
         }
 
         Material blockType = e.getClickedBlock().getType();
-
-        String replaceTypeName;
-        switch (plugin.getNMSAdapter().getDestroySpeedCategory(blockType)) {
-            case AXE:
-                replaceTypeName = "AXE";
-                break;
-            case HOE:
-                replaceTypeName = "HOE";
-                break;
-            case SHOVEL:
-                replaceTypeName = ServerVersion.isLegacy() ? "SPADE" : "SHOVEL";
-                break;
-            default:
-                replaceTypeName = "PICKAXE";
-                break;
-        }
+        DestroySpeedCategory destroySpeedCategory = plugin.getNMSAdapter().getDestroySpeedCategory(blockType);
+        String replaceTypeName = OmniToolHelper.getToolTypeName(destroySpeedCategory);
 
         if (handItem.getType().name().endsWith(replaceTypeName)) {
             return;

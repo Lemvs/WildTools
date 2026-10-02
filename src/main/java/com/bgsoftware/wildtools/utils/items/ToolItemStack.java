@@ -147,7 +147,7 @@ public abstract class ToolItemStack {
 
         private static final EmptyToolItemStack INSTANCE = new EmptyToolItemStack();
 
-        private final ItemStack EMPTY_ITEM = new ItemStack(Material.AIR);
+        private static final ItemStack EMPTY_ITEM = new ItemStack(Material.AIR);
 
         @Override
         protected void setItem(ItemStack handle) {
@@ -156,7 +156,7 @@ public abstract class ToolItemStack {
 
         @Override
         public ItemStack getItem() {
-            return this.EMPTY_ITEM;
+            return EMPTY_ITEM;
         }
 
         @Nullable

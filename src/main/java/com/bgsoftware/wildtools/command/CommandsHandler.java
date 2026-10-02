@@ -60,7 +60,7 @@ public class CommandsHandler implements CommandExecutor, TabCompleter {
                 Locale.HELP_COMMAND_HEADER.send(sender);
 
                 for (ICommand cmd : this.commands) {
-                    if (sender.hasPermission(subCommand.getPermission())) {
+                    if (sender.hasPermission(cmd.getPermission())) {
                         Locale.HELP_COMMAND_LINE.send(sender, cmd.getUsage(), cmd.getDescription());
                     }
                 }

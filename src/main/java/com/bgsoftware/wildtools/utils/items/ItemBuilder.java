@@ -89,7 +89,7 @@ public class ItemBuilder {
 
     public ItemBuilder withLore(String firstLine, List<String> lore) {
         if (this.itemMeta != null && firstLine != null && lore != null && !firstLine.isEmpty()) {
-            List<String> formattedLore = new ArrayList<>();
+            ArrayList<String> formattedLore = new ArrayList<>();
 
             firstLine = ChatColor.translateAlternateColorCodes('&', firstLine);
             formattedLore.add(firstLine);
@@ -100,7 +100,7 @@ public class ItemBuilder {
 
             if (formattedLore.size() > 10) {
                 for (int i = 10; i < formattedLore.size(); i++) {
-                    formattedLore.remove(formattedLore.get(i));
+                    formattedLore.remove(i);
                 }
 
                 formattedLore.add(ChatColor.getLastColors(firstLine) + "...");

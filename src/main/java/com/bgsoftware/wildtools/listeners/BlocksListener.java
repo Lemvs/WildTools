@@ -241,13 +241,9 @@ public class BlocksListener implements Listener {
         Material blockType = e.getClickedBlock().getType();
         DestroySpeedCategory destroySpeedCategory = plugin.getNMSAdapter().getDestroySpeedCategory(blockType);
 
-        if (OmniToolHelper.isAlreadyCorrectToolType(toolType, destroySpeedCategory)) {
-            return;
-        }
-
         Material newToolType = OmniToolHelper.getNewToolType(toolType, destroySpeedCategory);
 
-        if (toolType != newToolType) {
+        if (newToolType != toolType) {
             toolItemStack.setType(newToolType);
         }
     }

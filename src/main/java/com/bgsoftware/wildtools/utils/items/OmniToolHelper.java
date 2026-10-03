@@ -13,7 +13,7 @@ public class OmniToolHelper {
     static {
         String shovelSuffix = ServerVersion.isLegacy() ? "SPADE" : "SHOVEL";
 
-        for (Material material : Materials.getTools()) {
+        for (Material material : Materials.getOmniTools()) {
             String toolName = material.name();
             int lastUnderscoreIndex = toolName.lastIndexOf('_');
 
@@ -37,21 +37,6 @@ public class OmniToolHelper {
 
     public static void init() {
         // Do nothing.
-    }
-
-    public static boolean isAlreadyCorrectToolType(Material toolType, DestroySpeedCategory destroySpeedCategory) {
-        switch (destroySpeedCategory) {
-            case AXE:
-                return Materials.isAxe(toolType);
-            case HOE:
-                return Materials.isHoe(toolType);
-            case SHOVEL:
-                return Materials.isShovel(toolType);
-            case PICKAXE:
-                return Materials.isPickaxe(toolType);
-            default:
-                return false;
-        }
     }
 
     public static Material getNewToolType(Material toolType, DestroySpeedCategory category) {

@@ -145,7 +145,7 @@ public class NMSAdapterImpl implements NMSAdapter {
 
     @Override
     public DestroySpeedCategory getDestroySpeedCategory(Material material) {
-        return DESTROY_SPEED_CATEGORIES.get(material);
+        return DESTROY_SPEED_CATEGORIES.getOrDefault(material, DestroySpeedCategory.PICKAXE);
     }
 
     @Override

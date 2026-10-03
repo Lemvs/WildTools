@@ -63,7 +63,13 @@ public class NMSAdapterImpl implements NMSAdapter {
 
     static {
         for (Material material : Material.values()) {
-            IBlockData blockData = CraftMagicNumbers.getBlock(material).getBlockData();
+            Block block = CraftMagicNumbers.getBlock(material);
+
+            if (block == null) {
+                continue;
+            }
+
+            IBlockData blockData = block.getBlockData();
 
             if (Items.DIAMOND_AXE.getDestroySpeed(DIAMOND_AXE_ITEM_STACK, blockData) == 8f) {
                 DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.AXE);
@@ -153,7 +159,7 @@ public class NMSAdapterImpl implements NMSAdapter {
 
     @Override
     public DestroySpeedCategory getDestroySpeedCategory(Material material) {
-        return DESTROY_SPEED_CATEGORIES.get(material);
+        return DESTROY_SPEED_CATEGORIES.getOrDefault(material, DestroySpeedCategory.PICKAXE);
     }
 
     @Override

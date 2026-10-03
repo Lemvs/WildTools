@@ -46,6 +46,22 @@ public class NMSAdapterImpl implements NMSAdapter {
     private static final ItemStack DIAMOND_HOE_ITEM_STACK = new ItemStack(Items.DIAMOND_HOE);
     private static final ItemStack DIAMOND_SHOVEL_ITEM_STACK = new ItemStack(Items.DIAMOND_SHOVEL);
 
+    static {
+        for (Material material : Material.values()) {
+            Block block = CraftMagicNumbers.getBlock(material);
+
+            if (Items.DIAMOND_AXE.getDestroySpeed(DIAMOND_AXE_ITEM_STACK, block) == 8f) {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.AXE);
+            } else if (Items.DIAMOND_HOE.getDestroySpeed(DIAMOND_HOE_ITEM_STACK, block) == 8f) {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.HOE);
+            } else if (Items.DIAMOND_SHOVEL.getDestroySpeed(DIAMOND_SHOVEL_ITEM_STACK, block) == 8f) {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.SHOVEL);
+            } else {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.PICKAXE);
+            }
+        }
+    }
+
     @Override
     public ToolItemStack createToolItemStack(org.bukkit.inventory.ItemStack bukkitItem) {
         ItemStack nmsItem;
@@ -112,23 +128,7 @@ public class NMSAdapterImpl implements NMSAdapter {
 
     @Override
     public DestroySpeedCategory getDestroySpeedCategory(Material material) {
-        return DESTROY_SPEED_CATEGORIES.computeIfAbsent(material, mat -> {
-            Block block = CraftMagicNumbers.getBlock(mat);
-
-            if (Items.DIAMOND_AXE.getDestroySpeed(DIAMOND_AXE_ITEM_STACK, block) == 8f) {
-                return DestroySpeedCategory.AXE;
-            }
-
-            if (Items.DIAMOND_HOE.getDestroySpeed(DIAMOND_HOE_ITEM_STACK, block) == 8f) {
-                return DestroySpeedCategory.HOE;
-            }
-
-            if (Items.DIAMOND_SHOVEL.getDestroySpeed(DIAMOND_SHOVEL_ITEM_STACK, block) == 8f) {
-                return DestroySpeedCategory.SHOVEL;
-            }
-
-            return DestroySpeedCategory.PICKAXE;
-        });
+        return DESTROY_SPEED_CATEGORIES.get(material);
     }
 
     private static Enchantment initializeGlowEnchantment() {

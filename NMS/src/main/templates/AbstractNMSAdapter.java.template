@@ -54,6 +54,20 @@ public abstract class AbstractNMSAdapter implements NMSAdapter {
 
     private static final EnumMap<Material, DestroySpeedCategory> DESTROY_SPEED_CATEGORIES = new EnumMap<>(Material.class);
 
+    static {
+        for (Material material : Material.values()) {
+            if (Tag.MINEABLE_AXE.isTagged(material)) {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.AXE);
+            } else if (Tag.MINEABLE_HOE.isTagged(material)) {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.HOE);
+            } else if (Tag.MINEABLE_SHOVEL.isTagged(material)) {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.SHOVEL);
+            } else {
+                DESTROY_SPEED_CATEGORIES.put(material, DestroySpeedCategory.PICKAXE);
+            }
+        }
+    }
+
     @Override
     public void loadLegacy() {
         // Load legacy by accessing the CraftLegacy class.
@@ -141,21 +155,7 @@ public abstract class AbstractNMSAdapter implements NMSAdapter {
 
     @Override
     public DestroySpeedCategory getDestroySpeedCategory(Material material) {
-        return DESTROY_SPEED_CATEGORIES.computeIfAbsent(material, mat -> {
-            if (Tag.MINEABLE_AXE.isTagged(mat)) {
-                return DestroySpeedCategory.AXE;
-            }
-
-            if (Tag.MINEABLE_HOE.isTagged(mat)) {
-                return DestroySpeedCategory.HOE;
-            }
-
-            if (Tag.MINEABLE_SHOVEL.isTagged(mat)) {
-                return DestroySpeedCategory.SHOVEL;
-            }
-
-            return DestroySpeedCategory.PICKAXE;
-        });
+        return DESTROY_SPEED_CATEGORIES.get(material);
     }
 
     @Override
